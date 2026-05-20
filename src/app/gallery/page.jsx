@@ -79,7 +79,7 @@ const GalleryPage = () => {
                         key={idx}
                         href={img.src}
                         data-fancybox="gallery"
-                        data-caption={img.alt}
+                        // data-caption={img.alt}
                         className={styles.galleryItem}
                     >
                         <Image
