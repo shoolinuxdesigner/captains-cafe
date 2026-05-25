@@ -65,7 +65,7 @@ const menu = {
         qrLink: [{ link: "https://dinein.petpooja.com/qr/31vzyfmgbu/1" }]
     },
     foodPartnerLogo: [
-        { image: "/images/logos/zomato.png", link: "#" },
+        { image: "/images/logos/zomato.png", link: "https://www.zomato.com/bhubaneswar/the-captains-cafe-nayapalli-bhubaneshwar" },
         { image: "/images/logos/swiggy.png", link: "#" },
         { image: "/images/logos/uberEats.png", link: "#" },
         { image: "/images/logos/zepto.png", link: "#" },

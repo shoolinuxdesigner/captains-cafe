@@ -34,6 +34,7 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel"
 import Link from 'next/link'
+import AppDownload from '@/components/design/app download';
 
 const About = () => {
     const section1 = useRef(null);
@@ -124,7 +125,7 @@ const About = () => {
 
     return (
 
-        <div className='container py-10'>
+        <div className='container pt-10'>
             {/* <button className='bg-blue-700 text-lg w-full flex flex-col text-white px-8 py-3 rounded-full hover:bg-blue-900 cursor-pointer' onClick={() => router.push("/")}>Click Here</button> */}
 
             {/* About Us Cards */}
@@ -179,7 +180,7 @@ const About = () => {
             <div className="flex flex-col w-full justify-center items-center p-0 md:px-6 lg:px-40 mb-18">
                 <div className='px-2 md:px-6 w-full md:w-10/12 mb-6'>
                     <h1 className='text-2xl sm:text-3xl font-bold text-[#713711] dark:text-orange-100 mb-3 text-center'>Our Values</h1>
-                    <p className='text-[#5D3820] dark:text-orange-200 text-md: md:text-lg text-center'>At <strong>The Captain&apos;s Café,</strong>we are guided by a commitment to quality, innovation, and sustainability. We strive to craft exceptional dishes using the finest ingredients while embracing creativity to deliver unique global flavors. Our warm hospitality ensures every guest feels welcome, and our passion for food drives us to create meaningful dining experiences that leave a lasting impression.</p>
+                    <p className='text-[#5D3820] dark:text-orange-200 text-base md:text-lg text-center'>At <strong>The Captain&apos;s Café,</strong>we are guided by a commitment to quality, innovation, and sustainability. We strive to craft exceptional dishes using the finest ingredients while embracing creativity to deliver unique global flavors. Our warm hospitality ensures every guest feels welcome, and our passion for food drives us to create meaningful dining experiences that leave a lasting impression.</p>
                 </div>
                 <div className="flex gap-4 flex-row justify-center flex-wrap mx-auto w-fit">
                     {valuePoints.map((items, key) => (
@@ -207,8 +208,8 @@ const About = () => {
                     <Carousel opts={{ align: "start", }} className="w-full h-full">
                         <CarouselContent>
                             {videoTestimonials.map((items, key) => (
-                                <CarouselItem key={key} className="basis-1/1 md:basis-1/2 lg:basis-1/3 xl:basis-1/4 py-4">
-                                    <div className={`${styles.videoCard_design} mx-auto relative rounded-lg overflow-hidden w-[260px]`}>
+                                <CarouselItem key={key} className="basis-full md:basis-1/2 lg:basis-1/3 xl:basis-1/4 py-4">
+                                    <div className={`${styles.videoCard_design} mx-auto relative rounded-lg overflow-hidden w-full max-w-[260px]`}>
                                         <video
                                             controls
                                             preload="none"
@@ -310,6 +311,8 @@ const About = () => {
                 </div>
                 <Link className="mt-5 text-center flex justify-center text-amber-900 dark:text-gray-200 w-full" href="# ">See all reviews by our customers<MdArrowOutward className='ps-2' size={26} /></Link>
             </div>
+
+            <AppDownload />
         </div>
     )
 }
