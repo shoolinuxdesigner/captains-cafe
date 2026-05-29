@@ -104,7 +104,7 @@ const Page = () => {
                                     <hr className='w-full' />
                                 </div>
                                 <div className='w-full h-full border-0 md:border-r border-gray-200 pr-0 md:pr-3'>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-5 gap-4 w-full">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-4 w-full">
                                         <div className="space-y-1">
                                             <Label className="text-[14px] text-gray-600 block font-medium" mandatory={true}>User Image</Label>
                                             <Input
@@ -114,15 +114,15 @@ const Page = () => {
                                                 onChange={handleFileChange}
                                                 ref={fileInputRef}
                                             />
-                                            <div className="space-y-1">
-                                                <Label className="text-[14px] text-gray-600 block font-medium" mandatory={true}>User Full Name</Label>
-                                                <Input
-                                                    placeholder="Enter User Full Name"
-                                                    className="w-full py-2 text-sm shadow-sm"
-                                                    value={username}
-                                                    onChange={(e) => setUsername(e.target.value)}
-                                                />
-                                            </div>
+                                        </div>
+                                        <div className="space-y-1">
+                                            <Label className="text-[14px] text-gray-600 block font-medium" mandatory={true}>User Full Name</Label>
+                                            <Input
+                                                placeholder="Enter User Full Name"
+                                                className="w-full py-2 text-sm shadow-sm"
+                                                value={username}
+                                                onChange={(e) => setUsername(e.target.value)}
+                                            />
                                         </div>
                                         <div className="space-y-1">
                                             <Label className="text-[14px] text-gray-600 block font-medium" mandatory={true}>Designation</Label>
