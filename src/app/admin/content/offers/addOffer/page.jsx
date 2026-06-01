@@ -5,6 +5,7 @@ import { toast } from "react-hot-toast";
 import { FiPlusSquare } from "react-icons/fi";
 import { GoPlus, GoX } from "react-icons/go";
 import { MdOutlineEdit, MdOutlineDelete } from "react-icons/md";
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 // Breadcrumb
 import {
@@ -22,6 +23,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 const AddNewOffer = () => {
+    const [date, setDate] = React.useState("");
     const [editorText, setEditorText] = useState('');
 
     // FAQ state
@@ -112,7 +114,7 @@ const AddNewOffer = () => {
 
                     {/* Card Details */}
                     <h3 className="text-sm font-semibold text-gray-800">Card Details</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-4 w-full">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 gap-4 w-full">
                         <div className="space-y-1">
                             <Label className="text-[13px] text-gray-600 font-medium">Offer Name</Label>
                             <Input placeholder="Enter Name" className="w-full text-sm shadow-sm" />
@@ -125,11 +127,30 @@ const AddNewOffer = () => {
                             <Label className="text-[13px] text-gray-600 font-medium">Brand Logo</Label>
                             <input type="file" className="w-full text-sm border border-gray-200 rounded-md px-2 py-1.5 bg-white cursor-pointer" />
                         </div>
+                        <div className="space-y-1">
+                            <Label className="text-[14px] text-gray-600 block font-medium">Validity</Label>
+                            <div className="w-full relative shadow-sm rounded-md">
+                                <input
+                                    type="date"
+                                    className="absolute inset-0 w-full h-full opacity-0 z-10"
+                                    aria-label="Select date"
+                                    onChange={(e) => setDate(e.target.value)}
+                                />
+                                <div
+                                    className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm flex items-center justify-between bg-white hover:bg-gray-50 cursor-pointer"
+                                >
+                                    <span className={`${date ? "text-black" : "text-gray-500"}`}>
+                                        {date || "Select Date"}
+                                    </span>
+                                    <FaRegCalendarAlt className="text-gray-400 cursor-pointer" size={16} />
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Offer Details */}
                     <h3 className="text-sm font-semibold text-gray-800 mt-2">Offer Details</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-4 w-full">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 gap-4 w-full">
                         <div className="space-y-1">
                             <Label className="text-[13px] text-gray-600 font-medium">Header Text</Label>
                             <Input placeholder="Enter Text" className="w-full text-sm shadow-sm" />

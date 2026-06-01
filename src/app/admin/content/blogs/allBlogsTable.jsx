@@ -55,21 +55,9 @@ const AllBlogsTable = () => {
         }));
     };
 
-    // Function to delete blog
-    const handleDelete = (id) => {
-        setBlogs(blogs.map(blog => {
-            if (blog.id === id) {
-                // Show toast notification
-                toast.success(`Blog deleted successfully!`);
-
-                return {
-                    ...blog,
-                    status: 'archived',
-                    isPublished: false
-                };
-            }
-            return blog;
-        }));
+    // Function to toggle archive state - merging logic since we only have Active/Archived in image
+    const toggleArchiveState = (id) => {
+        togglePublishState(id); // Reusing logic for simplicity as the image implies binary state
     };
 
     // Function to edit blog
@@ -196,19 +184,21 @@ const AllBlogsTable = () => {
                     {isPublished ? "Unpublish" : isScheduled ? "Publish Now" : "Publish"}
                 </button>
 
-                {/* Delete Button */}
                 <button
                     variant="ghost"
                     size="sm"
-                    className="px-2 py-0.5 rounded-sm cursor-pointer border transition-all text-sm font-medium whitespace-nowrap text-red-700 bg-red-50 hover:bg-red-100 border-red-300"
-                    title="Delete"
+                    className={`px-2 py-0.5 rounded-sm cursor-pointer border transition-all text-sm font-medium whitespace-nowrap ${isArchived
+                        ? 'text-gray-700 bg-gray-100 hover:bg-gray-200 border-gray-300'
+                        : 'text-amber-700 bg-amber-50 hover:bg-amber-100 border-amber-300'
+                        }`}
+                    title={isArchived ? "Unarchive" : "Archive"}
                     onClick={(e) => {
                         e.stopPropagation();
-                        handleDelete(row.id);
+                        toggleArchiveState(row.id);
                     }}
                 >
-                    Delete
-                </button>
+                    {isArchived ? "Unarchive" : "Archive"}
+                </button>0
 
                 {/* Edit Button */}
                 <button

@@ -23,7 +23,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 const AddLoyaltyProgram = () => {
-    const [date, setDate] = React.useState("");
+    const [postingDate, setPostingDate] = React.useState("");
+    const [expireDate, setExpireDate] = React.useState("");
     const [editorText, setEditorText] = useState('');
     const handleSubmit = () => {
         toast.success("Offer submitted successfully!");
@@ -65,7 +66,7 @@ const AddLoyaltyProgram = () => {
                     <hr className='mb-1' />
 
                     {/* Card Details */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-4 w-full">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-4 w-full">
                         <div className="space-y-1">
                             <Label className="text-[14px] text-gray-600 block font-medium">Offer Title</Label>
                             <Input
@@ -86,14 +87,33 @@ const AddLoyaltyProgram = () => {
                                 <input
                                     type="date"
                                     className="absolute inset-0 w-full h-full opacity-0 z-10"
-                                    aria-label="Select Date"
-                                    onChange={(e) => setDate(e.target.value)}
+                                    aria-label="Select Posting Date"
+                                    onChange={(e) => setPostingDate(e.target.value)}
                                 />
                                 <div
                                     className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm flex items-center justify-between bg-white hover:bg-gray-50 cursor-pointer"
                                 >
-                                    <span className={`${date ? "text-black" : "text-gray-500"}`}>
-                                        {date ? date.split('-').reverse().join('-') : "Select Date"}
+                                    <span className={`${postingDate ? "text-black" : "text-gray-500"}`}>
+                                        {postingDate ? postingDate.split('-').reverse().join('-') : "Select Date"}
+                                    </span>
+                                    <FiCalendar className="text-gray-400 cursor-pointer" size={16} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="space-y-1">
+                            <Label className="text-[14px] text-gray-600 block font-medium">Expire Date</Label>
+                            <div className="w-full relative">
+                                <input
+                                    type="date"
+                                    className="absolute inset-0 w-full h-full opacity-0 z-10"
+                                    aria-label="Select Expire Date"
+                                    onChange={(e) => setExpireDate(e.target.value)}
+                                />
+                                <div
+                                    className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm flex items-center justify-between bg-white hover:bg-gray-50 cursor-pointer"
+                                >
+                                    <span className={`${expireDate ? "text-black" : "text-gray-500"}`}>
+                                        {expireDate ? expireDate.split('-').reverse().join('-') : "Select Date"}
                                     </span>
                                     <FiCalendar className="text-gray-400 cursor-pointer" size={16} />
                                 </div>

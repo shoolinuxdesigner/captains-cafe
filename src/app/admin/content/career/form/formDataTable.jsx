@@ -15,6 +15,7 @@ const FormDataTable = () => {
         phone: "+91 85689 85986",
         jobPosition: "Kitchen Staff",
         message: "My experience at CCMC has been amazing - excellent faculty, hands-on training, and a supportive environment that prepared me well for my maritime career.",
+        experiance: "1 year",
         fileLink: resume1,
         status: "applied"
     },
@@ -25,6 +26,7 @@ const FormDataTable = () => {
         phone: "+91 85689 85986",
         jobPosition: "Culinary Arts Instructor",
         message: "My time at CCMC was fantastic - outstanding instructors, practical training, and a nurturing atmosphere that equipped me thoroughly for my career in maritime.",
+        experiance: "3 year 1 month",
         fileLink: resume1,
         status: "applied"
     },
@@ -35,6 +37,7 @@ const FormDataTable = () => {
         phone: "+91 85689 85986",
         jobPosition: "Pastry Chef",
         message: "CCMC provided me with an enriching experience; the curriculum was robust, and the mentorship I received was invaluable for my professional growth.",
+        experiance: "2 year 6 month",
         fileLink: resume1,
         status: "applied"
     },
@@ -45,6 +48,7 @@ const FormDataTable = () => {
         phone: "+91 85689 85986",
         jobPosition: "Waiter",
         message: "The training at CCMC was exceptional, offering a blend of theory and practice that truly honed my skills in pastry arts, preparing me for the culinary field.",
+        experiance: "9 months",
         fileLink: resume1,
         status: "applied"
     },
@@ -55,6 +59,7 @@ const FormDataTable = () => {
         phone: "+91 85689 85986",
         jobPosition: "Waitress",
         message: "My time at CCMC was transformative - the hands-on training and supportive staff helped me develop the skills needed for a successful career in maritime.",
+        experiance: "1 year 1 month",
         fileLink: resume1,
         status: "applied"
     },
@@ -65,6 +70,7 @@ const FormDataTable = () => {
         phone: "+91 85689 85986",
         jobPosition: "Bartender",
         message: "The curriculum at CCMC was comprehensive, providing me with the knowledge and skills to excel in my role as a bartender.",
+        experiance: "7 year",
         fileLink: resume1,
         status: "applied"
     },
@@ -75,6 +81,7 @@ const FormDataTable = () => {
         phone: "+91 85689 85986",
         jobPosition: "Kitchen Staff",
         message: "My time at CCMC was enriching - the hands-on training and supportive staff helped me develop the skills needed for a successful career in maritime.",
+        experiance: "1 year 2 month",
         fileLink: resume1,
         status: "applied"
     },
@@ -85,6 +92,7 @@ const FormDataTable = () => {
         phone: "+91 85689 85986",
         jobPosition: "Kitchen Staff",
         message: "The training at CCMC was exceptional, offering a blend of theory and practice that truly honed my skills in pastry arts, preparing me for the culinary field.",
+        experiance: "3 year 4 month",
         fileLink: resume1,
         status: "applied"
     },
@@ -95,6 +103,7 @@ const FormDataTable = () => {
         phone: "+91 85689 85986",
         jobPosition: "Kitchen Staff",
         message: "My time at CCMC was enriching - the hands-on training and supportive staff helped me develop the skills needed for a successful career in maritime.",
+        experiance: "1 year 3 month",
         fileLink: resume1,
         status: "applied"
     },
@@ -105,6 +114,7 @@ const FormDataTable = () => {
         phone: "+91 85689 85986",
         jobPosition: "Kitchen Staff",
         message: "The curriculum at CCMC was comprehensive, providing me with the knowledge and skills to excel in my role as a bartender.",
+        experiance: "1 year",
         fileLink: resume1,
         status: "applied"
     },
@@ -115,6 +125,7 @@ const FormDataTable = () => {
         phone: "+91 85689 85986",
         jobPosition: "Kitchen Staff",
         message: "My time at CCMC was enriching - the hands-on training and supportive staff helped me develop the skills needed for a successful career in maritime.",
+        experiance: "1 year",
         fileLink: resume1,
         status: "applied"
     },
@@ -197,6 +208,16 @@ const FormDataTable = () => {
             cell: (row) => (
                 <div className="flex items-center justify-center">
                     <span className="font-semibold text-blue-800">{row.jobPosition}</span>
+                </div>
+            )
+        },
+        {
+            key: 'experiance',
+            header: 'Experiance',
+            width: '290px',
+            cell: (row) => (
+                <div className="flex items-center justify-center">
+                    <span className="font-semibold text-gray-600">{row.experiance}</span>
                 </div>
             )
         },

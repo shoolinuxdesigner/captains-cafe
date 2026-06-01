@@ -631,7 +631,7 @@ const DataTable = ({
             </div>
 
             {/* Table */}
-            <div className="border rounded-lg overflow-hidden bg-white dark:bg-zinc-900">
+            <div className="border rounded-lg overflow-x-auto bg-white dark:bg-zinc-900">
                 <Table>
                     <TableHeader>
                         <TableRow>

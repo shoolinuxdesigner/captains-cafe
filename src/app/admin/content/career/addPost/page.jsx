@@ -74,7 +74,7 @@ const addNewPost = () => {
                             <Button text="Cancel" variant='outline' className='ml-auto' size='sm' radius='sm' link="/admin/content/career" />
                         </div>
                         <hr className='mb-2' />
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-4 w-full">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-4 w-full">
                             <div className="space-y-1">
                                 <Label className="text-[14px] text-gray-600 block font-medium">Job Position</Label>
                                 <Select>
@@ -85,6 +85,18 @@ const addNewPost = () => {
                                         <SelectItem value="1">Job Position 1</SelectItem>
                                         <SelectItem value="2">Job Position 2</SelectItem>
                                         <SelectItem value="3">Job Position 3</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <div className="space-y-1">
+                                <Label className="text-[14px] text-gray-600 block font-medium">Location</Label>
+                                <Select>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select Location" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="1">Location 1</SelectItem>
+                                        <SelectItem value="2">Location 2</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </div>

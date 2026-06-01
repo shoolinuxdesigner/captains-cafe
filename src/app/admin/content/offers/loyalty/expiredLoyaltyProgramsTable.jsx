@@ -21,10 +21,10 @@ const ExpiredPostsTable = () => {
         toast.success("Offer re-published successfully!");
     };
 
-    // Archive the expired offer
-    const handleArchive = (id) => {
+    // Delete the expired offer
+    const handleDelete = (id) => {
         setOffers(offers.filter(o => o.id !== id));
-        toast.success("Offer archived successfully!");
+        toast.success("Offer deleted successfully!");
     };
 
     // Edit offer
@@ -136,13 +136,13 @@ const ExpiredPostsTable = () => {
                     Publish
                 </button>
 
-                {/* Archive */}
+                {/* Delete */}
                 <button
-                    className="disabled:opacity-40 disabled:cursor-default px-3 py-1 rounded-md cursor-default border transition-all text-sm font-medium whitespace-nowrap text-gray-300 border-gray-200 bg-white"
-                    title="Archive"
-                    disabled
+                    className="px-3 py-1 rounded-md cursor-pointer border transition-all text-sm font-medium whitespace-nowrap text-red-600 bg-white hover:bg-red-50 border-red-500"
+                    title="Delete"
+                    onClick={(e) => { e.stopPropagation(); handleDelete(row?.id); }}
                 >
-                    Archive
+                    Delete
                 </button>
 
                 {/* Edit */}

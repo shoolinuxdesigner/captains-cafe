@@ -12,16 +12,10 @@ const ExpiredPostsTable = () => {
         { id: 3, offerTitle: "New Cafe Opening Offer", availed: "163 Customers", validity: "03 Aug 2025", status: "expired" },
     ]);
 
-    // Re-publish an expired offer
-    const handlePublish = (id) => {
+    // Permanently delete offer
+    const handleDelete = (id) => {
         setOffers(offers.filter(o => o.id !== id));
-        toast.success("Offer re-published successfully!");
-    };
-
-    // Archive the expired offer
-    const handleArchive = (id) => {
-        setOffers(offers.filter(o => o.id !== id));
-        toast.success("Offer archived successfully!");
+        toast.success("Offer deleted successfully!");
     };
 
     // Edit offer
@@ -106,24 +100,13 @@ const ExpiredPostsTable = () => {
         return (
             <div className="flex items-center justify-center gap-1 flex-wrap">
 
-                {/* Publish */}
+                {/* Delete */}
                 <button
-                    className="disabled:opacity-40 disabled:cursor-default px-2 py-0.5 rounded-sm cursor-pointer border transition-all text-sm font-medium whitespace-nowrap text-white bg-blue-900 hover:bg-blue-800 border-blue-900"
-                    title="Re-publish"
-                    onClick={(e) => { e.stopPropagation(); handlePublish(); }}
-                    disabled
+                    className="px-2 py-0.5 rounded-sm cursor-pointer border transition-all text-sm font-medium whitespace-nowrap text-red-700 bg-red-50 hover:bg-red-100 border-red-300"
+                    title="Delete"
+                    onClick={(e) => { e.stopPropagation(); handleDelete(row.id); }}
                 >
-                    Publish
-                </button>
-
-                {/* Archive */}
-                <button
-                    className="disabled:opacity-40 disabled:cursor-default px-2 py-0.5 rounded-sm cursor-pointer border transition-all text-sm font-medium whitespace-nowrap text-amber-700 bg-amber-50 hover:bg-amber-100 border-amber-300"
-                    title="Archive"
-                    onClick={(e) => { e.stopPropagation(); handleArchive(); }}
-                    disabled
-                >
-                    Archive
+                    Delete
                 </button>
 
                 {/* Edit */}

@@ -1,6 +1,7 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react'
 import { FiClock, FiCalendar } from "react-icons/fi";
+import { Editor } from 'primereact/editor';
 // Breadcrumb
 import {
     Breadcrumb,
@@ -39,6 +40,16 @@ const addBlog = () => {
     const [date, setDate] = React.useState("");
     const [time, setTime] = React.useState("");
 
+    const [editorText, setEditorText] = useState('');
+
+    const handleSubmit = () => {
+        toast.success("Offer submitted successfully!");
+    };
+
+    const handleReset = () => {
+        setEditorText('');
+        toast.success("Form reset successfully!");
+    };
     return (
         <div className='w-full'>
             <Breadcrumb>
@@ -64,7 +75,7 @@ const addBlog = () => {
                             <Button text="Cancel" className='ml-auto' size='sm' radius='sm' link="/admin/content/blogs" />
                         </div>
                         <hr className='mb-2' />
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-4 w-full">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-4 w-full">
                             <div className="space-y-1">
                                 <Label className="text-[14px] text-gray-600 block font-medium">Blog Heading</Label>
                                 <Input
@@ -139,6 +150,20 @@ const addBlog = () => {
 
                             </div>
                         </div>
+                    </div>
+                    {/* Rich Text Editor */}
+                    <div className="mt-2">
+                        <Editor
+                            value={editorText}
+                            onTextChange={(e) => setEditorText(e.htmlValue)}
+                            style={{ minHeight: '220px' }}
+                        />
+                    </div>
+
+                    {/* Bottom buttons */}
+                    <div className="flex flex-row justify-center gap-3 mt-2">
+                        <Button text="RESET" variant='outline' size='sm' radius='sm' onClick={handleReset} />
+                        <Button text="SUBMIT" size='sm' radius='sm' onClick={handleSubmit} />
                     </div>
                 </Card>
             </div >
