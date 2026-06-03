@@ -12,6 +12,10 @@ export default function DashboardLayout({ children }) {
         if (pathname.includes('/profile')) return "User Profile";
         if (pathname.includes('/orders')) return "My Orders";
         if (pathname.includes('/payments')) return "Payment History";
+        if (pathname.includes('/subscriptions')) return "Subscriptions";
+        if (pathname.includes('/notifications')) return "Notifications";
+        if (pathname.includes('/address')) return "Address";
+        if (pathname.includes('/wishlist')) return "Wishlist";
         return "User Dashboard";
     };
 

@@ -142,7 +142,7 @@ const UserSidebar = () => {
                     {isMobile && <div className="flex-shrink-0" />}
 
                     {/* Scrollable Content Container */}
-                    <div className="bg_design_sidebar flex-1 overflow-y-auto overflow-x-hidden md:overflow-x-visible md:overflow-y-visible p-6 lg:p-0 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
+                    <div className="flex-1 overflow-y-auto overflow-x-hidden md:overflow-x-visible md:overflow-y-visible p-6 lg:p-0 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
                         {/* Navigation Menu */}
                         <nav className="flex-1">
                             <ul className="space-y-2">
