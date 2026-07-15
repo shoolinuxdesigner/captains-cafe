@@ -29,18 +29,31 @@ const quicksand = Quicksand({
   variable: "--font-quicksand",
 });
 
-const MAINTENANCE_MODE = false;
+const MAINTENANCE_MODE = true;
+const MAINTENANCE_BYPASS_PATHS = [
+  "/themenu", // Example bypass path
+];
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
   const isAdminPath = pathname?.startsWith('/admin');
+  const isBypassedPath = MAINTENANCE_BYPASS_PATHS.some(
+    (path) => pathname === path || pathname?.startsWith(path + '/')
+  );
 
   return (
     <html lang="en" className={`${inter.variable}`} suppressHydrationWarning>
       <body suppressHydrationWarning className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-          {MAINTENANCE_MODE ? (
+          {MAINTENANCE_MODE && !isBypassedPath ? (
             <MaintenancePage />
+          ) : isBypassedPath ? (
+            // Completely Blank/Clean Layout for Bypassed/Special Page
+            <div className="blank-layout">
+              {children}
+              <Toaster position="top-right" reverseOrder={false}
+                toastOptions={{ duration: 3000 }} />
+            </div>
           ) : isAdminPath ? (
             // Admin Layout - Clean
             <div className="admin-layout">
