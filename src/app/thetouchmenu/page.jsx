@@ -8,7 +8,7 @@ import { IoLogoInstagram } from "react-icons/io5";
 import { MdCall } from "react-icons/md";
 import { HiLocationMarker } from "react-icons/hi";
 import { IoGlobeOutline } from "react-icons/io5";
-import { BsFillPinAngleFill, BsPenFill, BsTrash, BsCardList } from "react-icons/bs";
+import { BsPenFill, BsTrash } from "react-icons/bs";
 import { IoCloseSharp } from "react-icons/io5";
 import { Cinzel, Montserrat } from "next/font/google";
 
@@ -42,13 +42,10 @@ const montserrat = Montserrat({
 });
 
 export default function TheMenu() {
-  const [activeTool, setActiveTool] = useState(null); // 'pin' | 'pen' | null
-  const [pins, setPins] = useState([]); // { id, imgIndex, x, y, note: "" }
+  const [isPenActive, setIsPenActive] = useState(false);
   const [drawings, setDrawings] = useState({}); // { [imgIndex]: [ { id, points: [{x,y}], color } ] }
   const [activeLine, setActiveLine] = useState(null); // { imgIndex, points: [{x,y}], color }
   const [selectedColor, setSelectedColor] = useState("#d4af37"); // Gold, Red, Blue
-  const [activePinForNote, setActivePinForNote] = useState(null); // { id, note }
-  const [isSummaryOpen, setIsSummaryOpen] = useState(false); // List of selected items for waiter
 
   const pointsToPath = (points) => {
     if (!points || points.length === 0) return "";
@@ -77,7 +74,7 @@ export default function TheMenu() {
   };
 
   const handleDrawStart = (e, imgIndex) => {
-    if (activeTool !== "pen") return;
+    if (!isPenActive) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const coord = getRelativeCoords(e, rect);
     setActiveLine({
@@ -88,7 +85,7 @@ export default function TheMenu() {
   };
 
   const handleDrawMove = (e, imgIndex) => {
-    if (activeTool !== "pen" || !activeLine || activeLine.imgIndex !== imgIndex) return;
+    if (!isPenActive || !activeLine || activeLine.imgIndex !== imgIndex) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const coord = getRelativeCoords(e, rect);
     setActiveLine((prev) => ({
@@ -98,7 +95,7 @@ export default function TheMenu() {
   };
 
   const handleDrawEnd = (imgIndex) => {
-    if (activeTool !== "pen" || !activeLine || activeLine.imgIndex !== imgIndex) return;
+    if (!isPenActive || !activeLine || activeLine.imgIndex !== imgIndex) return;
     const lineId = Date.now();
     setDrawings((prev) => {
       const imgLines = prev[imgIndex] || [];
@@ -108,23 +105,6 @@ export default function TheMenu() {
       };
     });
     setActiveLine(null);
-  };
-
-  const handleImageClick = (e, imgIndex) => {
-    if (activeTool !== "pin") return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-
-    const newPin = {
-      id: Date.now(),
-      imgIndex,
-      x: Math.max(0, Math.min(100, x)),
-      y: Math.max(0, Math.min(100, y)),
-      note: "",
-    };
-    setPins((prev) => [...prev, newPin]);
-    setActivePinForNote(newPin);
   };
 
   const menuImages = [
@@ -195,11 +175,6 @@ export default function TheMenu() {
           {menuImages.map((src, index) => (
             <div
               key={index}
-              onClick={(e) => {
-                if (activeTool === "pin") {
-                  handleImageClick(e, index);
-                }
-              }}
               className="overflow-hidden border border-gray-800 bg-[#0a1829] shadow-lg relative w-full select-none"
             >
               {/* The Menu Image */}
@@ -241,7 +216,7 @@ export default function TheMenu() {
               )}
 
               {/* Drawing Gesture Overlay */}
-              {activeTool === "pen" && (
+              {isPenActive && (
                 <div
                   className="absolute inset-0 z-20 touch-none cursor-crosshair"
                   onMouseDown={(e) => handleDrawStart(e, index)}
@@ -253,32 +228,6 @@ export default function TheMenu() {
                   onTouchEnd={() => handleDrawEnd(index)}
                 />
               )}
-
-              {/* Pins Overlay */}
-              {pins.filter((pin) => pin.imgIndex === index).map((pin, pIndex) => (
-                <button
-                  key={pin.id}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setActivePinForNote(pin);
-                  }}
-                  style={{ left: `${pin.x}%`, top: `${pin.y}%` }}
-                  className="absolute transform -translate-x-1/2 -translate-y-1/2 z-30 flex items-center justify-center group"
-                >
-                  {/* Glowing Aura */}
-                  <span className="absolute inline-flex h-8 w-8 rounded-full bg-[#d4af37] opacity-65 animate-ping"></span>
-                  {/* Center Pin Button */}
-                  <span className="relative flex items-center justify-center rounded-full h-6 w-6 bg-[#d4af37] text-[#0d1f33] font-bold text-xs border border-white shadow-xl hover:scale-110 transition-transform">
-                    {pin.note ? "📝" : pIndex + 1}
-                  </span>
-                  {/* Quick Note Tooltip on hover */}
-                  {pin.note && (
-                    <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-[#0d1f33] text-xs text-white px-2 py-1 rounded shadow-lg border border-gray-800 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                      {pin.note}
-                    </span>
-                  )}
-                </button>
-              ))}
             </div>
           ))}
         </main>
@@ -360,23 +309,14 @@ export default function TheMenu() {
       </div> {/* End Scrollable Container */}
 
       {/* Floating Instructions Banner */}
-      {activeTool && (
+      {isPenActive && (
         <div className="absolute top-0 left-0 right-0 z-40 bg-[#d4af37] text-[#0d1f33] px-4 py-2.5 text-xs font-bold text-center flex items-center justify-between shadow-md">
           <div className="flex items-center gap-1.5 mx-auto">
-            {activeTool === "pin" ? (
-              <>
-                <span>📌</span>
-                <span>Tapping Mode Active: Tap menu items to pin them. Tapped pins can hold notes.</span>
-              </>
-            ) : (
-              <>
-                <span>✏️</span>
-                <span>Drawing Mode Active: Draw anywhere on the menu pictures.</span>
-              </>
-            )}
+            <span>✏️</span>
+            <span>Drawing Mode Active: Draw anywhere on the menu pictures.</span>
           </div>
           <button
-            onClick={() => setActiveTool(null)}
+            onClick={() => setIsPenActive(false)}
             className="bg-[#0d1f33] text-white px-2 py-0.5 rounded text-[10px] uppercase font-bold"
           >
             Done
@@ -386,229 +326,54 @@ export default function TheMenu() {
 
       {/* Floating Actions Dock */}
       <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
-        {activeTool && (
+        {isPenActive && (
           <div className="flex flex-col gap-2.5 items-end animate__animated animate__fadeInUp animate__faster">
             {/* Clear All Button */}
             <button
               onClick={() => {
-                if (confirm("Clear all pins and drawings?")) {
-                  setPins([]);
+                if (confirm("Clear all drawings?")) {
                   setDrawings({});
                 }
               }}
               className="bg-red-600 hover:bg-red-700 text-white w-11 h-11 rounded-full flex items-center justify-center shadow-lg transition-transform active:scale-95"
-              title="Clear all highlights"
+              title="Clear all drawings"
             >
               <BsTrash className="text-lg" />
             </button>
 
-            {/* Selection summary button */}
-            {pins.length > 0 && (
-              <button
-                onClick={() => setIsSummaryOpen(true)}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 h-11 rounded-full flex items-center justify-center gap-1.5 shadow-lg transition-transform active:scale-95 text-xs font-bold"
-              >
-                <BsCardList className="text-base" />
-                <span>Selection List ({pins.length})</span>
-              </button>
-            )}
-
             {/* Color selectors when in Pen Mode */}
-            {activeTool === "pen" && (
-              <div className="flex gap-2 bg-[#091524] border border-gray-800 p-2 rounded-full shadow-lg">
-                {["#d4af37", "#ef4444", "#06b6d4"].map((color) => (
-                  <button
-                    key={color}
-                    onClick={() => setSelectedColor(color)}
-                    style={{ backgroundColor: color }}
-                    className={`w-6 h-6 rounded-full border-2 ${selectedColor === color ? "border-white scale-110" : "border-transparent opacity-80"
-                      } transition-all`}
-                  />
-                ))}
-              </div>
-            )}
-
-            {/* Tool Selector Toggle */}
-            <div className="flex bg-[#0a1829] border border-gray-800 p-1.5 rounded-full shadow-2xl items-center gap-1">
-              <button
-                onClick={() => setActiveTool("pin")}
-                className={`px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1 transition-all ${activeTool === "pin" ? "bg-[#d4af37] text-[#0d1f33]" : "text-gray-400 hover:text-white"
-                  }`}
-              >
-                <BsFillPinAngleFill className="text-sm" />
-                <span>Pin Spot</span>
-              </button>
-              <button
-                onClick={() => setActiveTool("pen")}
-                className={`px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1 transition-all ${activeTool === "pen" ? "bg-[#d4af37] text-[#0d1f33]" : "text-gray-400 hover:text-white"
-                  }`}
-              >
-                <BsPenFill className="text-sm" />
-                <span>Pen Draw</span>
-              </button>
+            <div className="flex gap-2 bg-[#091524] border border-gray-800 p-2 rounded-full shadow-lg">
+              {["#d4af37", "#ef4444", "#06b6d4"].map((color) => (
+                <button
+                  key={color}
+                  onClick={() => setSelectedColor(color)}
+                  style={{ backgroundColor: color }}
+                  className={`w-6 h-6 rounded-full border-2 ${selectedColor === color ? "border-white scale-110" : "border-transparent opacity-80"
+                    } transition-all`}
+                />
+              ))}
             </div>
           </div>
         )}
 
         {/* Main Tool Toggle FAB */}
         <button
-          onClick={() => setActiveTool((prev) => (prev ? null : "pin"))}
-          className={`w-14 h-14 rounded-full flex items-center justify-center shadow-2xl transition-all active:scale-95 ${activeTool
+          onClick={() => setIsPenActive((prev) => !prev)}
+          className={`w-14 h-14 rounded-full flex items-center justify-center shadow-2xl transition-all active:scale-95 ${isPenActive
             ? "bg-[#0a1829] border border-gray-800 text-white hover:bg-slate-800"
             : "bg-gradient-to-r from-[#d4af37] to-[#eac75d] text-[#0d1f33] hover:scale-105"
             }`}
         >
-          {activeTool ? (
+          {isPenActive ? (
             <IoCloseSharp className="text-2xl" />
           ) : (
             <div className="relative flex flex-col items-center">
               <BsPenFill className="text-lg animate-pulse" />
-              <span className="text-[8px] font-bold tracking-tight mt-0.5">MARK</span>
+              <span className="text-[8px] font-bold tracking-tight mt-0.5">DRAW</span>
             </div>
           )}
         </button>
       </div>
-
-      {/* Note Editor Overlay Modal */}
-      {activePinForNote && (
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#0a1829] border border-gray-800 w-full max-w-xs rounded-2xl p-5 shadow-2xl space-y-4 animate__animated animate__zoomIn animate__faster">
-            <div className="flex justify-between items-center border-b border-gray-800 pb-2.5">
-              <h3 className="text-sm font-semibold text-[#d4af37] uppercase tracking-wider flex items-center gap-1.5">
-                <span>📌</span> Selection Note
-              </h3>
-              <button
-                onClick={() => setActivePinForNote(null)}
-                className="text-gray-400 hover:text-white"
-              >
-                <IoCloseSharp className="text-xl" />
-              </button>
-            </div>
-
-            <div className="space-y-1.5">
-              <label className="text-[11px] text-gray-400">Specify item / quantity / custom request:</label>
-              <input
-                type="text"
-                placeholder="e.g., 2 Chili Chicken (Dry)"
-                value={activePinForNote.note || ""}
-                onChange={(e) => {
-                  const text = e.target.value;
-                  setPins((prev) =>
-                    prev.map((p) => (p.id === activePinForNote.id ? { ...p, note: text } : p))
-                  );
-                  setActivePinForNote((prev) => ({ ...prev, note: text }));
-                }}
-                className="w-full bg-[#122840] border border-gray-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-[#d4af37] transition-colors"
-                autoFocus
-              />
-            </div>
-
-            <div className="flex gap-2 pt-2">
-              <button
-                onClick={() => {
-                  setPins((prev) => prev.filter((p) => p.id !== activePinForNote.id));
-                  setActivePinForNote(null);
-                }}
-                className="flex-1 bg-red-600/20 text-red-400 hover:bg-red-600/30 border border-red-500/20 py-2 rounded-xl text-xs font-bold transition-all active:scale-95"
-              >
-                Remove Pin
-              </button>
-              <button
-                onClick={() => setActivePinForNote(null)}
-                className="flex-1 bg-[#d4af37] hover:bg-[#e2c153] text-[#0d1f33] py-2 rounded-xl text-xs font-bold transition-all active:scale-95"
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Waiter Selection List Tray Modal */}
-      {isSummaryOpen && (
-        <div className="absolute inset-0 bg-[#0d1f33] z-50 flex flex-col">
-          {/* Header */}
-          <div className="bg-[#162e49] border-b border-gray-800 px-5 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="text-xl">📋</span>
-              <div>
-                <h2 className="text-sm font-bold uppercase tracking-wider text-[#d4af37]">Waiter Selection List</h2>
-                <p className="text-[10px] text-gray-400 uppercase">Show this screen to the waiter</p>
-              </div>
-            </div>
-            <button
-              onClick={() => setIsSummaryOpen(false)}
-              className="p-1.5 rounded-full bg-[#122840] text-gray-400 hover:text-white transition-colors"
-            >
-              <IoCloseSharp className="text-lg" />
-            </button>
-          </div>
-
-          {/* Content */}
-          <div className="flex-grow p-5 overflow-y-auto space-y-4">
-            {pins.length === 0 ? (
-              <div className="text-center py-10 space-y-2">
-                <span className="text-4xl block">📌</span>
-                <p className="text-sm text-gray-400">No items pinned.</p>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {pins.map((pin, index) => (
-                  <div
-                    key={pin.id}
-                    className="bg-[#0a1829] border border-gray-800 p-3.5 rounded-xl flex items-start justify-between gap-3 shadow-lg"
-                  >
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span className="bg-[#d4af37] text-[#0d1f33] text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                          {index + 1}
-                        </span>
-                        <span className="text-[10px] text-blue-300 font-semibold uppercase tracking-wider">
-                          Page {pin.imgIndex + 1} Pin
-                        </span>
-                      </div>
-                      <p className="text-sm text-white font-medium pl-7 leading-relaxed">
-                        {pin.note || "Spot marked on menu picture"}
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => {
-                        setPins((prev) => prev.filter((p) => p.id !== pin.id));
-                        if (pins.length === 1) setIsSummaryOpen(false);
-                      }}
-                      className="text-gray-500 hover:text-red-400 p-1 rounded transition-colors"
-                    >
-                      <BsTrash className="text-sm" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Footer Actions */}
-          <div className="p-5 bg-[#0a1829] border-t border-gray-900 flex gap-3">
-            <button
-              onClick={() => {
-                if (confirm("Clear all selections?")) {
-                  setPins([]);
-                  setDrawings({});
-                  setIsSummaryOpen(false);
-                }
-              }}
-              className="flex-grow border border-red-500/20 text-red-400 hover:bg-red-600/10 py-3 rounded-xl text-xs font-bold uppercase transition-all active:scale-95"
-            >
-              Clear All
-            </button>
-            <button
-              onClick={() => setIsSummaryOpen(false)}
-              className="flex-grow bg-[#d4af37] hover:bg-[#e2c153] text-[#0d1f33] py-3 rounded-xl text-xs font-bold uppercase transition-all active:scale-95"
-            >
-              Back to Menu
-            </button>
-          </div>
-        </div>
-      )}
 
     </div>
   );
