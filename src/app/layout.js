@@ -32,6 +32,7 @@ const quicksand = Quicksand({
 const MAINTENANCE_MODE = true;
 const MAINTENANCE_BYPASS_PATHS = [
   "/themenu", // Example bypass path
+  "/thetouchmenu", // Example bypass path
 ];
 
 export default function RootLayout({ children }) {
