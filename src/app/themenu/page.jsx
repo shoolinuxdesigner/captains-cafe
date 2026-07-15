@@ -121,21 +121,21 @@ export default function TheMenu() {
       </main>
 
       {/* Bottom: Mobile-Optimized Footer */}
-      <footer className="bg-gradient-to-t from-[#091524] to-[#0d1f33] pt-8 pb-10 px-6 border-t border-gray-800 text-center">
+      <footer className="bg-gradient-to-t from-[#091524] to-[#0d1f33] p-4 border-t border-gray-800 text-center">
 
         {/* Outlets Directory */}
         <div className="space-y-6 text-left mb-8">
-          <h3 className="text-sm font-semibold tracking-wider text-[#d4af37] uppercase border-b border-gray-800 pb-2">
+          <h3 className="text-md font-semibold tracking-wider text-[#d4af37] uppercase border-b border-gray-800 pb-2">
             Our Outlets
           </h3>
 
           {Object.entries(outlets).map(([key, outlet]) => (
             <div key={key} className="space-y-1">
-              <h4 className="text-xs font-bold text-white flex items-center gap-1.5">
+              <h4 className="text-sm font-bold text-white flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#d4af37]"></span>
                 {outlet.name}
               </h4>
-              <p className="text-[11px] text-gray-400 leading-relaxed pl-3.5">
+              <p className="text-xs text-gray-400 leading-relaxed pl-3.5">
                 {outlet.address}
               </p>
               <div className="flex gap-4 pt-1 pl-3.5">
@@ -143,7 +143,7 @@ export default function TheMenu() {
                   href={outlet.mapsLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[10px] text-blue-400 hover:underline flex items-center gap-1"
+                  className="text-xs text-blue-400 hover:underline flex items-center gap-1"
                 >
                   <HiLocationMarker className="text-xs" /> View on Map
                 </a>
@@ -153,8 +153,8 @@ export default function TheMenu() {
         </div>
 
         {/* Brand & Website */}
-        <div className="pt-6 border-t border-gray-900 space-y-4">
-          <div className="flex justify-center gap-2 items-center text-xs text-blue-300">
+        <div className="pt-3 border-t border-gray-900 space-y-4">
+          <div className="flex justify-center gap-2 items-center text-sm text-blue-300">
             <IoGlobeOutline className="text-sm text-[#d4af37]" />
             <a
               href="https://thecaptainscafe.com"
