@@ -94,7 +94,7 @@ export default function TheMenu() {
           Sail Into Flavors
         </p>
         <p className="text-[11px] text-gray-400 mt-3">
-          Menu available at both of our outlets
+          This Menu Is Available at Both of Our Outlets
         </p>
       </header>
 
