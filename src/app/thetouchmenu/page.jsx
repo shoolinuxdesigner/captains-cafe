@@ -162,7 +162,7 @@ export default function TheMenu() {
   };
 
   return (
-    <div className="h-screen w-full max-w-xl mx-auto relative overflow-hidden bg-[#0d1f33] text-gray-100 flex flex-col font-sans shadow-2xl border-x border-gray-800">
+    <div className="w-full max-w-xl mx-auto relative overflow-hidden bg-[#0d1f33] text-gray-100 flex flex-col font-sans shadow-2xl border-x border-gray-800">
 
       {/* Scrollable Container */}
       <div className="flex-grow overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden flex flex-col relative">
@@ -385,7 +385,7 @@ export default function TheMenu() {
       )}
 
       {/* Floating Actions Dock */}
-      <div className="absolute bottom-6 right-6 z-40 flex flex-col items-end gap-3">
+      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
         {activeTool && (
           <div className="flex flex-col gap-2.5 items-end animate__animated animate__fadeInUp animate__faster">
             {/* Clear All Button */}
@@ -454,8 +454,8 @@ export default function TheMenu() {
         <button
           onClick={() => setActiveTool((prev) => (prev ? null : "pin"))}
           className={`w-14 h-14 rounded-full flex items-center justify-center shadow-2xl transition-all active:scale-95 ${activeTool
-              ? "bg-[#0a1829] border border-gray-800 text-white hover:bg-slate-800"
-              : "bg-gradient-to-r from-[#d4af37] to-[#eac75d] text-[#0d1f33] hover:scale-105"
+            ? "bg-[#0a1829] border border-gray-800 text-white hover:bg-slate-800"
+            : "bg-gradient-to-r from-[#d4af37] to-[#eac75d] text-[#0d1f33] hover:scale-105"
             }`}
         >
           {activeTool ? (
