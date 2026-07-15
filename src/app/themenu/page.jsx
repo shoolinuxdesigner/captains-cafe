@@ -1,30 +1,50 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
+import logoLight from "@/assets/images/logo_light.png";
 import { FaFacebookF } from "react-icons/fa6";
 import { IoLogoInstagram } from "react-icons/io5";
 import { MdCall } from "react-icons/md";
 import { HiLocationMarker } from "react-icons/hi";
 import { IoGlobeOutline } from "react-icons/io5";
+import { Cinzel, Montserrat } from "next/font/google";
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["400", "700", "800"],
+  display: "swap",
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
 
 export default function TheMenu() {
-  // Manual list of menu images. You can add, remove, or edit these paths here directly.
   const menuImages = [
-    "/images/menu/saheedNagarMenu/menu01.jpg",
-    "/images/menu/saheedNagarMenu/menu02.jpg",
-    "/images/menu/saheedNagarMenu/menu03.jpg",
-    "/images/menu/saheedNagarMenu/menu04.jpg",
-    "/images/menu/saheedNagarMenu/menu05.jpg",
-    "/images/menu/saheedNagarMenu/menu06.jpg",
-    "/images/menu/saheedNagarMenu/menu07.jpg",
-    "/images/menu/saheedNagarMenu/menu08.jpg",
-    // Add more image paths below as needed
+    "/images/menu/new/0.jpg",
+    "/images/menu/new/1.jpg",
+    "/images/menu/new/2.jpg",
+    "/images/menu/new/3.jpg",
+    "/images/menu/new/4.jpg",
+    "/images/menu/new/5.jpg",
+    "/images/menu/new/6.jpg",
+    "/images/menu/new/7.jpg",
+    "/images/menu/new/8.jpg",
+    "/images/menu/new/9.jpg",
+    "/images/menu/new/10.jpg",
+    "/images/menu/new/11.jpg",
+    "/images/menu/new/12.jpg",
+    "/images/menu/new/13.jpg",
+    "/images/menu/new/14.jpg",
   ];
 
   const outlets = {
     saheedNagar: {
       name: "Saheed Nagar Outlet",
-      address: "Beside Government Veterinary Hospital, Maharishi College Rd, Saheed Nagar, Bhubaneswar, Odisha 751007",
+      address: "Near Hotel Novotel, Maharishi College Rd, Saheed Nagar, Bhubaneswar, Odisha 751007",
       mapsLink: "https://maps.app.goo.gl/f1TYW4mgCycw8yP76",
       phone: "+91 81447 74349",
     },
@@ -37,29 +57,39 @@ export default function TheMenu() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0d1f33] text-gray-100 flex flex-col font-sans max-w-xl mx-auto shadow-2xl relative border-x border-gray-800">
+    <div className="h-screen overflow-y-auto bg-[#0d1f33] text-gray-100 flex flex-col font-sans max-w-xl mx-auto shadow-2xl relative border-x border-gray-800 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
 
       {/* Top Header: Brand & Info */}
-      <header className="pt-8 pb-6 px-6 text-center bg-gradient-to-b from-[#162e49] to-[#0d1f33] sticky top-0 z-10 backdrop-blur-md bg-opacity-95 border-b border-gray-800">
-        <h1 className="text-3xl font-bold tracking-wider text-[#d4af37] font-serif uppercase">
+      <header className="pt-6 pb-5 px-6 text-center bg-gradient-to-b from-[#162e49] to-[#0d1f33] backdrop-blur-md bg-opacity-95 border-b border-gray-800 flex flex-col items-center justify-center">
+        <div className="mb-2">
+          <Image
+            src={logoLight}
+            alt="The Captain's Cafe Logo"
+            width={60}
+            height={60}
+            className="object-contain"
+            priority
+          />
+        </div>
+        <h1 className={` text-xl font-bold tracking-wider text-white uppercase`}>
           The Captain&apos;s Cafe
         </h1>
-        <p className="text-xs text-blue-300 tracking-widest uppercase mt-1">
+        <p className={`${montserrat.className} text-[10px] text-blue-300 tracking-widest uppercase mt-0.5 font-semibold`}>
           Sail Into Flavors
         </p>
-        <p className="text-[11px] text-gray-400 mt-3 italic">
+        <p className="text-[11px] text-gray-400 mt-3">
           Menu available at both of our outlets
         </p>
       </header>
 
       {/* Middle: Menu Image Scroll Feed */}
-      <main className="flex-grow px-4 py-4 space-y-4 bg-[#0d1f33]">
+      <main className="flex-grow p-1 space-y-1 bg-[#0d1f33]">
         {menuImages.map((src) => (
           <div
             key={src}
-            className="overflow-hidden rounded-xl border border-gray-800 bg-[#0a1829] shadow-lg"
+            className="overflow-hidden border border-gray-800 bg-[#0a1829] shadow-lg"
           >
-            <div className="relative w-full aspect-[1/1.414]">
+            <div className="relative w-full">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={src}
@@ -98,12 +128,6 @@ export default function TheMenu() {
                   className="text-[10px] text-blue-400 hover:underline flex items-center gap-1"
                 >
                   <HiLocationMarker className="text-xs" /> View on Map
-                </a>
-                <a
-                  href={`tel:${outlet.phone.replace(/\s+/g, "")}`}
-                  className="text-[10px] text-blue-400 hover:underline flex items-center gap-1"
-                >
-                  <MdCall className="text-xs" /> {outlet.phone}
                 </a>
               </div>
             </div>
@@ -154,3 +178,5 @@ export default function TheMenu() {
     </div>
   );
 }
+
+
