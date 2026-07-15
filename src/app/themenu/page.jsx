@@ -25,6 +25,7 @@ import menu11 from "../../../public/images/menu/new/11.jpg";
 import menu12 from "../../../public/images/menu/new/12.jpg";
 import menu13 from "../../../public/images/menu/new/13.jpg";
 import menu14 from "../../../public/images/menu/new/14.jpg";
+import menu15 from "../../../public/images/menu/new/15.jpg";
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -55,6 +56,7 @@ export default function TheMenu() {
     menu12,
     menu13,
     menu14,
+    menu15,
   ];
 
   const outlets = {
