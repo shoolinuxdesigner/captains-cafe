@@ -10,6 +10,22 @@ import { HiLocationMarker } from "react-icons/hi";
 import { IoGlobeOutline } from "react-icons/io5";
 import { Cinzel, Montserrat } from "next/font/google";
 
+import menu0 from "../../../public/images/menu/new/0.jpg";
+import menu1 from "../../../public/images/menu/new/1.jpg";
+import menu2 from "../../../public/images/menu/new/2.jpg";
+import menu3 from "../../../public/images/menu/new/3.jpg";
+import menu4 from "../../../public/images/menu/new/4.jpg";
+import menu5 from "../../../public/images/menu/new/5.jpg";
+import menu6 from "../../../public/images/menu/new/6.jpg";
+import menu7 from "../../../public/images/menu/new/7.jpg";
+import menu8 from "../../../public/images/menu/new/8.jpg";
+import menu9 from "../../../public/images/menu/new/9.jpg";
+import menu10 from "../../../public/images/menu/new/10.jpg";
+import menu11 from "../../../public/images/menu/new/11.jpg";
+import menu12 from "../../../public/images/menu/new/12.jpg";
+import menu13 from "../../../public/images/menu/new/13.jpg";
+import menu14 from "../../../public/images/menu/new/14.jpg";
+
 const cinzel = Cinzel({
   subsets: ["latin"],
   weight: ["400", "700", "800"],
@@ -24,21 +40,21 @@ const montserrat = Montserrat({
 
 export default function TheMenu() {
   const menuImages = [
-    "/images/menu/new/0.jpg",
-    "/images/menu/new/1.jpg",
-    "/images/menu/new/2.jpg",
-    "/images/menu/new/3.jpg",
-    "/images/menu/new/4.jpg",
-    "/images/menu/new/5.jpg",
-    "/images/menu/new/6.jpg",
-    "/images/menu/new/7.jpg",
-    "/images/menu/new/8.jpg",
-    "/images/menu/new/9.jpg",
-    "/images/menu/new/10.jpg",
-    "/images/menu/new/11.jpg",
-    "/images/menu/new/12.jpg",
-    "/images/menu/new/13.jpg",
-    "/images/menu/new/14.jpg",
+    menu0,
+    menu1,
+    menu2,
+    menu3,
+    menu4,
+    menu5,
+    menu6,
+    menu7,
+    menu8,
+    menu9,
+    menu10,
+    menu11,
+    menu12,
+    menu13,
+    menu14,
   ];
 
   const outlets = {
@@ -84,20 +100,20 @@ export default function TheMenu() {
 
       {/* Middle: Menu Image Scroll Feed */}
       <main className="flex-grow p-1 space-y-1 bg-[#0d1f33]">
-        {menuImages.map((src) => (
+        {menuImages.map((src, index) => (
           <div
-            key={src}
-            className="overflow-hidden border border-gray-800 bg-[#0a1829] shadow-lg"
+            key={index}
+            className="overflow-hidden border border-gray-800 bg-[#0a1829] shadow-lg relative w-full"
           >
-            <div className="relative w-full">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={src}
-                alt="Cafe Menu Page"
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
+            <Image
+              src={src}
+              alt={`Cafe Menu Page ${index + 1}`}
+              className="w-full h-auto object-contain"
+              placeholder="blur"
+              priority={index < 2} // Preload the first two images for instant LCP
+              sizes="(max-width: 600px) 100vw, 600px"
+              loading={index < 2 ? undefined : "lazy"}
+            />
           </div>
         ))}
       </main>
