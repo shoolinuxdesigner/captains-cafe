@@ -5,7 +5,7 @@ import Image from "next/image";
 import logoLight from "@/assets/images/logo_light.png";
 import { FaFacebookF } from "react-icons/fa6";
 import { IoLogoInstagram } from "react-icons/io5";
-import { MdCall } from "react-icons/md";
+import { MdCall, MdUndo } from "react-icons/md";
 import { HiLocationMarker } from "react-icons/hi";
 import { IoGlobeOutline } from "react-icons/io5";
 import { BsPenFill, BsTrash } from "react-icons/bs";
@@ -46,6 +46,7 @@ export default function TheMenu() {
   const [drawings, setDrawings] = useState({}); // { [imgIndex]: [ { id, points: [{x,y}], color } ] }
   const [activeLine, setActiveLine] = useState(null); // { imgIndex, points: [{x,y}], color }
   const [selectedColor, setSelectedColor] = useState("#d4af37"); // Gold, Red, Blue
+  const [actionHistory, setActionHistory] = useState([]); // Array of { imgIndex, lineId }
 
   const pointsToPath = (points) => {
     if (!points || points.length === 0) return "";
@@ -104,7 +105,22 @@ export default function TheMenu() {
         [imgIndex]: [...imgLines, { id: lineId, points: activeLine.points, color: activeLine.color }],
       };
     });
+    setActionHistory((prev) => [...prev, { imgIndex, lineId }]);
     setActiveLine(null);
+  };
+
+  const handleUndo = () => {
+    if (actionHistory.length === 0) return;
+    const lastAction = actionHistory[actionHistory.length - 1];
+    setDrawings((prev) => {
+      const imgLines = prev[lastAction.imgIndex] || [];
+      const updatedLines = imgLines.filter((line) => line.id !== lastAction.lineId);
+      return {
+        ...prev,
+        [lastAction.imgIndex]: updatedLines,
+      };
+    });
+    setActionHistory((prev) => prev.slice(0, -1));
   };
 
   const menuImages = [
@@ -196,7 +212,7 @@ export default function TheMenu() {
                       key={line.id}
                       d={pointsToPath(line.points)}
                       stroke={line.color}
-                      strokeWidth="1.2"
+                      strokeWidth="0.8"
                       fill="none"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -206,7 +222,7 @@ export default function TheMenu() {
                     <path
                       d={pointsToPath(activeLine.points)}
                       stroke={activeLine.color}
-                      strokeWidth="1.2"
+                      strokeWidth="0.8"
                       fill="none"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -328,11 +344,25 @@ export default function TheMenu() {
       <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
         {isPenActive && (
           <div className="flex flex-col gap-2.5 items-end animate__animated animate__fadeInUp animate__faster">
+            {/* Undo Button */}
+            <button
+              onClick={handleUndo}
+              disabled={actionHistory.length === 0}
+              className={`w-11 h-11 rounded-full flex items-center justify-center shadow-lg transition-all active:scale-95 ${actionHistory.length === 0
+                  ? "bg-[#1a314d] text-gray-500 cursor-not-allowed opacity-50 border border-gray-800"
+                  : "bg-[#d4af37] hover:bg-[#eac75d] text-[#0d1f33] cursor-pointer"
+                }`}
+              title="Undo last stroke"
+            >
+              <MdUndo className="text-xl" />
+            </button>
+
             {/* Clear All Button */}
             <button
               onClick={() => {
                 if (confirm("Clear all drawings?")) {
                   setDrawings({});
+                  setActionHistory([]);
                 }
               }}
               className="bg-red-600 hover:bg-red-700 text-white w-11 h-11 rounded-full flex items-center justify-center shadow-lg transition-transform active:scale-95"
