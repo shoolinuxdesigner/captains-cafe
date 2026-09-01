@@ -10,7 +10,6 @@ import { HiLocationMarker } from "react-icons/hi";
 import { IoGlobeOutline } from "react-icons/io5";
 import { Cinzel, Montserrat } from "next/font/google";
 
-import menu0 from "../../../public/images/menu/new/0.jpg";
 import menu1 from "../../../public/images/menu/new/1.jpg";
 import menu2 from "../../../public/images/menu/new/2.jpg";
 import menu3 from "../../../public/images/menu/new/3.jpg";
@@ -26,6 +25,15 @@ import menu12 from "../../../public/images/menu/new/12.jpg";
 import menu13 from "../../../public/images/menu/new/13.jpg";
 import menu14 from "../../../public/images/menu/new/14.jpg";
 import menu15 from "../../../public/images/menu/new/15.jpg";
+import menu16 from "../../../public/images/menu/new/16.jpg";
+import menu17 from "../../../public/images/menu/new/17.jpg";
+import menu18 from "../../../public/images/menu/new/18.jpg";
+import menu19 from "../../../public/images/menu/new/19.jpg";
+import menu20 from "../../../public/images/menu/new/20.jpg";
+import menu21 from "../../../public/images/menu/new/21.jpg";
+import menu22 from "../../../public/images/menu/new/22.jpg";
+import menu23 from "../../../public/images/menu/new/23.jpg";
+import menu24 from "../../../public/images/menu/new/24.jpg";
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -41,7 +49,6 @@ const montserrat = Montserrat({
 
 export default function TheMenu() {
   const menuImages = [
-    menu0,
     menu1,
     menu2,
     menu3,
@@ -57,6 +64,15 @@ export default function TheMenu() {
     menu13,
     menu14,
     menu15,
+    menu16,
+    menu17,
+    menu18,
+    menu19,
+    menu20,
+    menu21,
+    menu22,
+    menu23,
+    menu24,
   ];
 
   const outlets = {
